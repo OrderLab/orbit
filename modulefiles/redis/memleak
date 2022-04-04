@@ -1,0 +1,7 @@
+#%Module1.0
+
+conflict redis
+
+set prefix /root/orbit/apps/redis/rel-memleak
+
+prepend-path PATH ${prefix}/bin

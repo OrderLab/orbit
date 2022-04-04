@@ -1,0 +1,41 @@
+diff --git a/redis/src/main/java/site/ycsb/db/RedisClient.java b/redis/src/main/java/site/ycsb/db/RedisClient.java
+index 2de9ad23..12662054 100644
+--- a/redis/src/main/java/site/ycsb/db/RedisClient.java
++++ b/redis/src/main/java/site/ycsb/db/RedisClient.java
+@@ -144,7 +144,7 @@ public class RedisClient extends DB {
+       Map<String, ByteIterator> values) {
+     if (jedis.hmset(key, StringByteIterator.getStringMap(values))
+         .equals("OK")) {
+-      jedis.zadd(INDEX_KEY, hash(key), key);
++      // jedis.zadd(INDEX_KEY, hash(key), key);
+       return Status.OK;
+     }
+     return Status.ERROR;
+@@ -152,7 +152,7 @@ public class RedisClient extends DB {
+ 
+   @Override
+   public Status delete(String table, String key) {
+-    return jedis.del(key) == 0 && jedis.zrem(INDEX_KEY, key) == 0 ? Status.ERROR
++    return jedis.del(key) == 0 /*&& jedis.zrem(INDEX_KEY, key) == 0*/ ? Status.ERROR
+         : Status.OK;
+   }
+ 
+@@ -166,7 +166,8 @@ public class RedisClient extends DB {
+   @Override
+   public Status scan(String table, String startkey, int recordcount,
+       Set<String> fields, Vector<HashMap<String, ByteIterator>> result) {
+-    Set<String> keys = jedis.zrangeByScore(INDEX_KEY, hash(startkey),
++    return Status.OK;
++    /* Set<String> keys = jedis.zrangeByScore(INDEX_KEY, hash(startkey),
+         Double.POSITIVE_INFINITY, 0, recordcount);
+ 
+     HashMap<String, ByteIterator> values;
+@@ -176,7 +177,7 @@ public class RedisClient extends DB {
+       result.add(values);
+     }
+ 
+-    return Status.OK;
++    return Status.OK; */
+   }
+ 
+ }

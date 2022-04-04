@@ -17,3 +17,8 @@ git checkout 967b1216
 ./auto/configure --with-http_dav_module --with-debug --prefix=$SCRIPT_DIR/rel-orig
 make -j$(nproc)
 make install
+
+git checkout 0a199f00
+./auto/configure --with-http_dav_module --with-debug --prefix=$SCRIPT_DIR/rel-segfault
+make -j$(nproc)
+make install

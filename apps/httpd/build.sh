@@ -3,8 +3,6 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR 
 
-mkdir rel-orig rel-proxy rel-watchdog
-
 git clone git@github.com:OrderLab/obiwan-httpd.git code
 cd code
 
@@ -25,6 +23,13 @@ make clean
 git checkout 2c250083
 ./buildconf
 ./configure --with-included-apr --prefix=$SCRIPT_DIR/rel-orig CFLAGS="-O3"
+make -j$(nproc)
+make install
+make clean
+
+git checkout 296a0ae5d
+./buildconf
+./configure --with-included-apr --prefix=$SCRIPT_DIR/rel-segfault CFLAGS="-O3"
 make -j$(nproc)
 make install
 make clean

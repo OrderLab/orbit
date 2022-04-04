@@ -1,0 +1,9 @@
+#%Module1.0
+
+conflict nginx
+
+module load userlib/plain
+
+set prefix /root/orbit/apps/nginx/rel-orbit
+
+prepend-path PATH ${prefix}/sbin
