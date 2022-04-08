@@ -10,6 +10,7 @@ Effect: This not only affects the PUT request itself, but also affects other run
 
 First start the Nginx server version that reverted the fix in the ticket.
 ```bash
+systemctl stop nginx
 module load nginx/segfault
 nginx
 ```
@@ -41,6 +42,7 @@ nginx -s stop
 First start the orbit version Nginx server.
 ```bash
 module unload nginx
+systemctl stop nginx
 module load nginx/orbit
 nginx
 ```

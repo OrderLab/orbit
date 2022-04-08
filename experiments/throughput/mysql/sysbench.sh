@@ -93,10 +93,8 @@ function run_once {
 }
 
 function run_all {
-    #for thds in `seq 25 25 250`; do
-    #for thds in 64; do
-    #for thds in 4; do
     for thds in 16; do
+        #for t in {1..5}; do
         for t in 1; do
             run_once $thds $t
             sleep 10;

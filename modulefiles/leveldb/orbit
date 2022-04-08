@@ -1,0 +1,9 @@
+#%Module1.0
+
+conflict leveldb
+
+module load userlib/plain
+
+set prefix /root/orbit/apps/leveldb/rel-orbit
+
+prepend-path PATH ${prefix}/bin

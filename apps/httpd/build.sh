@@ -6,12 +6,15 @@ cd $SCRIPT_DIR
 git clone git@github.com:OrderLab/obiwan-httpd.git code
 cd code
 
-git checkout c92203e
+module load userlib/plain
+
+git checkout 3e3b673
 ./buildconf
 ./configure --with-included-apr --prefix=$SCRIPT_DIR/rel-proxy CFLAGS="-O3" LDFLAGS="-lorbit"
 make -j$(nproc)
 make install
 make clean
+$SCRIPT_DIR/gen_config.sh $SCRIPT_DIR/rel-proxy/ config-appendix
 
 git checkout 48ff29d
 ./buildconf
@@ -19,6 +22,7 @@ git checkout 48ff29d
 make -j$(nproc)
 make install
 make clean
+$SCRIPT_DIR/gen_config.sh $SCRIPT_DIR/rel-watchdog/ config-appendix
 
 git checkout 2c250083
 ./buildconf
@@ -26,6 +30,7 @@ git checkout 2c250083
 make -j$(nproc)
 make install
 make clean
+$SCRIPT_DIR/gen_config.sh $SCRIPT_DIR/rel-orig/ config-appendix
 
 git checkout 296a0ae5d
 ./buildconf
@@ -33,3 +38,4 @@ git checkout 296a0ae5d
 make -j$(nproc)
 make install
 make clean
+$SCRIPT_DIR/gen_config.sh $SCRIPT_DIR/rel-segfault/ config-appendix-segfault

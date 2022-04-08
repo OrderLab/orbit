@@ -12,11 +12,11 @@ mkdir -p build && cd build
 git checkout d22e723
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$SCRIPT_DIR/rel-orbit ..
 make -j$(nproc)
-make install
-cp db_bench $SCRIPT_DIR/rel-orbit
+mkdir -p $SCRIPT_DIR/rel-orbit/bin
+cp db_bench $SCRIPT_DIR/rel-orbit/bin
 
 git checkout 1730a1a0
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$SCRIPT_DIR/rel-orig ..
 make -j$(nproc)
-make install
-cp db_bench $SCRIPT_DIR/rel-orig
+mkdir -p $SCRIPT_DIR/rel-orig/bin
+cp db_bench $SCRIPT_DIR/rel-orig/bin

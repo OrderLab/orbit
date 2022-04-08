@@ -2,7 +2,7 @@
 
 Original issue: https://github.com/redis/redis/issues/4323
 
-Description: A possible race condition between the asynchronous `lazyfree` thread and the SLOWLOG command can cause memory leak.
+Description: A possible race condition (TOCTOU bug) on refcount between the asynchronous `lazyfree` thread and the SLOWLOG command can cause memory leak.
 
 ## Reproducing original issue
 
@@ -12,18 +12,22 @@ module load redis/memleak
 redis-server
 ```
 
-On another tmux pane, start the redis client:
+In another tmux pane, start the redis client and feed in the payload commands in the current directory:
 ```bash
-redis-cli
+cd experiments/isolation/
+module load redis/memleak
+redis-cli < redis-memleak-payload
 ```
-and type in the payload one by one (words after '#' are comments)
-```
-config set slowlog-log-slower-than 0
-set foo bar
-object refcount foo   # refcount should be 2 (1 for 'foo' key, 1 in slowlog entry)
-FLUSHALL ASYNC        # (in thread) refcount-- or free
-SLOWLOG reset         # (sync)      refcount-- or free
-```
+
+> Explanation of the payload file:
+> ```
+> config set slowlog-log-slower-than 0   # set to log all operations in slowlog
+> set foo bar           # "bar" string object will be added to both the dict and the slowlog
+> object refcount foo   # refcount should be 2 (1 for 'foo' key, 1 in slowlog entry)
+> FLUSHALL ASYNC        # (async) refcount--
+> SLOWLOG reset         # (sync)  refcount--
+> ```
+> and the last two refcount-- have a TOCTOU bug.
 
 The output that indicates memory leak is
 ```
@@ -31,11 +35,10 @@ bar obj dec
 (... DB saved on disk ...)
 bar obj dec
 bar obj dec
-refcnt 0
 ```
 with no text showing "bar obj free".
 
-Stop redis by CTRL-C on the running `redis-server`.
+Stop redis by CTRL-C on the running `redis-server` and then `module unload redis` in every tmux pane.
 
 ## Isolation with orbit
 
@@ -46,13 +49,23 @@ module load redis/slowlog-delay
 redis-server
 ```
 
-Run the same previous payload, and the expected output that indicates successful memory deallocation will be
+In another tmux pane, start the redis client and feed in the payload:
+```bash
+module load redis/slowlog-delay
+redis-cli < redis-memleak-payload
+```
+
+The expected output that indicates successful memory deallocation will be
 ```
 bar obj dec
 bar obj dec
 (... DB saved on disk ...)
 bar obj free
-refcnt 1
 ```
+We can see there is a "bar obj free" in the output.
 
-Stop redis by CTRL-C on the running `redis-server` and running `killall redis-server` to also kill orbit instances.
+Stop redis by CTRL-C on the running `redis-server` and then
+```bash
+killall -9 redis-server
+module unload redis
+```

@@ -1,0 +1,23 @@
+Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_ROUTE_CHANGED
+<Proxy balancer://myset>
+    BalancerMember http://fe01:1111 min=0 smax=30 retry=30 max=100 loadfactor=50 route=fe01
+    BalancerMember http://fe02:1112 min=0 smax=30 retry=30 max=100 loadfactor=50 route=fe02
+    ProxySet stickysession=ROUTEID
+</proxy>
+
+ProxyPass "/somepath/"  "balancer://myset/"
+ProxyPass "/hello"  "http://localhost:1115"
+
+<Location "/balancer-manager">
+    SetHandler balancer-manager
+</Location>
+
+<IfModule mpm_event_module>
+    StartServers             1
+    MinSpareThreads          4
+    MaxSpareThreads          4
+    ThreadsPerChild          4
+    MaxRequestWorkers        4
+    MaxConnectionsPerChild   0
+    ServerLimit              1
+</IfModule>

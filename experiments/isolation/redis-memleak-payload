@@ -1,0 +1,5 @@
+config set slowlog-log-slower-than 0
+set foo bar
+object refcount foo
+FLUSHALL ASYNC
+SLOWLOG reset

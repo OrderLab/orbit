@@ -3,9 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
-module load orbit/plain
-
-mkdir rel-orig rel-orbit
+module load userlib/plain
 
 git clone git@github.com:OrderLab/obiwan-varnish.git code
 cd code

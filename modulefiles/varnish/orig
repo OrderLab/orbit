@@ -1,0 +1,14 @@
+#%Module1.0
+
+conflict varnish
+
+set prefix /root/orbit/apps/varnish/rel-orig
+
+prepend-path PATH ${prefix}/bin
+prepend-path PATH ${prefix}/sbin
+prepend-path CPATH ${prefix}/include
+prepend-path C_INCLUDE_PATH ${prefix}/include
+prepend-path CPLUS_INCLUDE_PATH ${prefix}/include
+prepend-path LIBRARY_PATH ${prefix}/lib
+prepend-path LD_LIBRARY_PATH ${prefix}/lib
+#prepend-path MANPATH ${prefix}/man

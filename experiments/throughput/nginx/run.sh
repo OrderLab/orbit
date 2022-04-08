@@ -3,30 +3,29 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
-gcc mix.c -o mix -lcurl -O3
+make
 
 duration=120
 
 thd=4
 
 function run {
+	systemctl stop nginx
+	sleep 1
+
 	module load nginx/$1
 	nginx
-	for i in {1..5}; do
-		./mix > $1-1.log &
-		pid1=$!
-		./mix > $1-2.log &
-		pid2=$!
-		./mix > $1-3.log &
-		pid3=$!
-		./mix > $1-4.log &
-		pid4=$!
-		wait $pid1
-		wait $pid2
-		wait $pid3
-		wait $pid4
+	sleep 1
+
+	#for i in {1..5}; do
+	for i in 1; do
+		./mix > $1-$i.log
+		sleep 1
 	done
+
 	nginx -s stop
+	sleep 1
+	pkill -9 nginx
 	module unload nginx
 	sleep 1
 }

@@ -1,0 +1,10 @@
+server {
+	listen 1111;
+	root /var/www/rep1;
+	index index.html;
+}
+server {
+	listen 1112;
+	root /var/www/rep2;
+	index index.html;
+}
