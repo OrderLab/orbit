@@ -3,9 +3,14 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
+if [[ $(id -u) != 0 ]]; then
+	echo Please run this script as root.
+	exit 1
+fi
+
 apt update
 apt install -y neovim git psmisc procps tmux cmake build-essential bison \
-	libssl-dev libncurses5-dev pkg-config python3 zlib1g-dev \
+	libssl-dev libncurses5-dev pkg-config python3 zlib1g-dev curl \
 	automake autotools-dev libedit-dev libjemalloc-dev libncurses-dev \
 	libpcre3-dev libtool python3-docutils python3-sphinx cpio \
 	llvm-6.0 llvm-6.0-dev llvm-6.0-tools llvm-6.0-runtime llvm-6.0-doc \
@@ -20,3 +25,6 @@ mkdir -p /var/www/rep{1,2}
 cp $SCRIPT_DIR/1k.html /var/www/rep1/index.html
 cp $SCRIPT_DIR/1k.html /var/www/rep2/index.html
 echo "127.0.0.1 fe01 fe02 fe03" >> /etc/hosts
+
+echo '/dev/sda / ext4 errors=remount-ro,acl 0 1' > /etc/fstab
+passwd -d root

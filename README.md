@@ -75,6 +75,7 @@ Run the shorthand:
 ```bash
 r
 ```
+By default, we run VM with the `-nographic` QEMU option, i.e., no GUI, and the console output is by default 80x24. If you have GUI environment (e.g. running on a desktop or using X11 forward), you can comment the `-nographic` line in `scripts/run-kernel.sh`.
 
 You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
 
