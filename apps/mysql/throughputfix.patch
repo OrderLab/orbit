@@ -1,0 +1,54 @@
+diff --git a/storage/innobase/lock/lock0lock.cc b/storage/innobase/lock/lock0lock.cc
+index e72566ea..677ae173 100644
+--- a/storage/innobase/lock/lock0lock.cc
++++ b/storage/innobase/lock/lock0lock.cc
+@@ -77,16 +77,14 @@ Created 5/7/1996 Heikki Tuuri
+ my_bool	innobase_deadlock_detect = TRUE;
+ 
+ /** Total number of cached record locks */
+-static const ulint	REC_LOCK_CACHE = 1;
+-// static const ulint	REC_LOCK_CACHE = 8;
++static const ulint	REC_LOCK_CACHE = 8;
+ 
+ /** Maximum record lock size in bytes */
+ static const ulint	REC_LOCK_SIZE = sizeof(ib_lock_t);
+ static const ulint	REC_LOCK_BITMAP_SIZE = 256;
+ 
+ /** Total number of cached table locks */
+-static const ulint	TABLE_LOCK_CACHE = 1;
+-// static const ulint	TABLE_LOCK_CACHE = 8;
++static const ulint	TABLE_LOCK_CACHE = 8;
+ 
+ /** Size in bytes, of the table lock instance */
+ static const ulint	TABLE_LOCK_SIZE = sizeof(ib_lock_t);
+@@ -1546,6 +1544,8 @@ RecLock::lock_alloc(
+ 			orbit_alloc(table_lock_oballoc, sizeof(*lock)));
+ 		lock->un_member.rec_lock.bits = reinterpret_cast<byte*>(
+ 			orbit_alloc(rec_lock_oballoc, size));
++		trx->lock.rec_pool.push_back(lock);
++		++trx->lock.rec_cached;
+ 		obprintf(stderr, "Orbit allocated rec lock %p from pool\n", lock);
+ 	} else {
+ 
+@@ -2050,10 +2050,10 @@ lock_rec_lock_fast(
+ 	}
+ 
+ 	/* Orbit task cancellation */
+-	if (status == LOCK_REC_SUCCESS_CREATED && trx->has_orbit) {
++	/* if (status == LOCK_REC_SUCCESS_CREATED && trx->has_orbit) {
+ 		orbit_cancel_by_task(&trx->dl_ck_task);
+ 		trx->has_orbit = false;
+-	}
++	} */
+ 
+ 	return(status);
+ }
+@@ -3842,6 +3842,8 @@ lock_table_create(
+ 		obprintf(stderr, "Orbit allocating table lock from orbit pool.\n");
+ 		lock = reinterpret_cast<lock_t*>(
+ 			orbit_alloc(table_lock_oballoc, sizeof(*lock)));
++		trx->lock.table_pool.push_back(lock);
++		++trx->lock.table_cached;
+ 		obprintf(stderr, "Orbit allocated table lock %p from pool\n", lock);
+ 
+ 		/* lock = static_cast<lock_t*>(

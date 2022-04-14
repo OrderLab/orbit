@@ -1,0 +1,26 @@
+diff --git a/modules/http/http_request.c b/modules/http/http_request.c
+index 666b099..4e633b8 100644
+--- a/modules/http/http_request.c
++++ b/modules/http/http_request.c
+@@ -50,7 +50,7 @@
+ #endif
+ 
+ #include <unistd.h>
+-#define INJECT_WAIT 0
++#define INJECT_WAIT 1
+ 
+ APLOG_USE_MODULE(http);
+ 
+diff --git a/srclib/apr/locks/unix/thread_mutex.c b/srclib/apr/locks/unix/thread_mutex.c
+index 01858a6..f079c28 100644
+--- a/srclib/apr/locks/unix/thread_mutex.c
++++ b/srclib/apr/locks/unix/thread_mutex.c
+@@ -30,7 +30,7 @@
+ // FIXME: using a fixed size slots and expensive traverse just for PoC
+ #define NSLOTS 1024
+ #define OBWDG_INTERVAL 1
+-#define OBWDG_TIMEOUT 60
++#define OBWDG_TIMEOUT 10
+ // #define OBWDG_TIMEOUT 10
+ 
+ #if 0

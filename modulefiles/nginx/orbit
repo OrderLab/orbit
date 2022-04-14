@@ -2,7 +2,7 @@
 
 conflict nginx
 
-module load userlib/plain
+module load userlib/reuse
 
 set prefix /root/orbit/apps/nginx/rel-orbit
 

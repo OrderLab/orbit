@@ -2,7 +2,7 @@
 
 conflict leveldb
 
-module load userlib/plain
+module load userlib/dealloc
 
 set prefix /root/orbit/apps/leveldb/rel-orbit
 

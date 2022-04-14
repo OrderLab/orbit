@@ -3,6 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
+repeat=1
+if [ ! -z "$1" ]; then
+	repeat=$1
+fi
+
 make
 
 duration=120
@@ -17,8 +22,7 @@ function run {
 	nginx
 	sleep 1
 
-	#for i in {1..5}; do
-	for i in 1; do
+	for i in `seq $repeat`; do
 		./mix > $1-$i.log
 		sleep 1
 	done

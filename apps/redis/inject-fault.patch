@@ -1,0 +1,13 @@
+diff --git a/src/rdb.c b/src/rdb.c
+index 972dac4..d2e9a2d 100644
+--- a/src/rdb.c
++++ b/src/rdb.c
+@@ -1159,7 +1159,7 @@ int rdbSaveBackground(char *filename, rdbSaveInfo *rsi) {
+         fprintf(stderr, "orbit: RDB process is gone, spawn a new one\n");
+         rdb_orbit = orbit_create("rdb save", rdbSave_orbit, NULL);
+     }
+-    static bool do_inject = false;
++    static bool do_inject = true;
+     static int inject_counter = 0;
+ 
+     start = ustime();

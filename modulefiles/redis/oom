@@ -1,0 +1,9 @@
+#%Module1.0
+
+conflict redis
+
+module load userlib/dealloc
+
+set prefix /root/orbit/apps/redis/rel-oom
+
+prepend-path PATH ${prefix}/bin

@@ -6,3 +6,7 @@ compiler/
 *.out
 *.rdb
 rel-*/
+*.csv
+*.eps
+*.png
+*.pdf

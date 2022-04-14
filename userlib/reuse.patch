@@ -1,0 +1,13 @@
+diff --git a/lib/src/orbit.c b/lib/src/orbit.c
+index 152ef19..db3462f 100644
+--- a/lib/src/orbit.c
++++ b/lib/src/orbit.c
+@@ -593,7 +593,7 @@ int orbit_sendv(struct orbit_scratch *s)
+ 	/* If the send is not successful, we do not call trunc(), and it is
+ 	 * safe to allocate a new scratch in the same area since we will
+ 	 * rewrite it later anyway. */
+-	scratch_trunc(s);
++	// scratch_trunc(s);
+ 
+ 	return ret;
+ }

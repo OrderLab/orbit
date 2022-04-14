@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
-module load userlib/plain
+module load userlib/reuse
 
 git clone git@github.com:OrderLab/obiwan-varnish.git code
 cd code

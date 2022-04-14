@@ -1,0 +1,9 @@
+#%Module1.0
+
+conflict redis
+
+module load userlib/dealloc
+
+set prefix /root/orbit/apps/redis/rel-rdb-fault
+
+prepend-path PATH ${prefix}/bin

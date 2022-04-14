@@ -3,6 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
+repeat=1
+if [ ! -z "$1" ]; then
+	repeat=$1
+fi
+
 function ab {
     $SCRIPT_DIR/../../../apps/httpd/rel-orig/bin/ab $@
 }
@@ -21,13 +26,14 @@ function run {
 	varnishd -a :8080 -f $SCRIPT_DIR/config.vcl -p thread_pools=1 -p thread_pool_min=2 -p thread_pool_max=20 -p thread_pool_timeout=10
 	sleep 1
 
-	#for i in {1..5}; do
-	for i in 1; do
+	for i in `seq $repeat`; do
 		ab -c$thd -t$duration -n100000000 $url > res-${1}${thd}-${i}.out
 		sleep 5
 	done
 
 	varnishadm stop
+	sleep 1
+	pkill -9 varnishd
 	sleep 1
 	module unload varnish
 

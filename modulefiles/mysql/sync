@@ -1,0 +1,15 @@
+#%Module1.0
+
+conflict mysql
+
+module load userlib/plain
+
+set prefix /root/orbit/apps/mysql/rel-sync/dist
+
+prepend-path PATH ${prefix}/bin
+prepend-path CPATH ${prefix}/include
+prepend-path C_INCLUDE_PATH ${prefix}/include
+prepend-path CPLUS_INCLUDE_PATH ${prefix}/include
+prepend-path LIBRARY_PATH ${prefix}/lib
+prepend-path LD_LIBRARY_PATH ${prefix}/lib
+#prepend-path MANPATH ${prefix}/man

@@ -3,6 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
+repeat=1
+if [ ! -z "$1" ]; then
+	repeat=$1
+fi
+
 function ycsb {
     $SCRIPT_DIR/../../tools/ycsb/bin/ycsb $@
 }
@@ -11,8 +16,7 @@ function run {
 	tp=$1
 	module load redis/$tp
 
-	#for i in {1..5}; do
-	for i in 1; do
+	for i in `seq $repeat`; do
 		redis-server $SCRIPT_DIR/redis.conf &
 		sleep 1
 

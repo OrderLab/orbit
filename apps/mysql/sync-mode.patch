@@ -1,0 +1,13 @@
+diff --git a/storage/innobase/lock/lock0lock.cc b/storage/innobase/lock/lock0lock.cc
+index e72566ea..7f5a660f 100644
+--- a/storage/innobase/lock/lock0lock.cc
++++ b/storage/innobase/lock/lock0lock.cc
+@@ -71,7 +71,7 @@ Created 5/7/1996 Heikki Tuuri
+ 		orbit_scratch_push_update((scratch), &(lval), sizeof(rval)); \
+ 	} while (0)
+ 
+-#define OB_ASYNC_MODE
++// #define OB_ASYNC_MODE
+ 
+ /* Flag to enable/disable deadlock detector. */
+ my_bool	innobase_deadlock_detect = TRUE;

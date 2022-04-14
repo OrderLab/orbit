@@ -3,22 +3,32 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
-mkdir -p rel-plain/{include,lib} rel-dealloc/{include,lib}
+mkdir -p rel-{plain,dealloc,reuse}/{include,lib}
 
 git clone git@github.com:OrderLab/obiwan-userlib.git code
 cd code
 mkdir build
-cd build
 
-git checkout a6f7afb2
-cmake ..
-make -j$(nproc)
-# TODO: install script within cmake
-cp $PWD/../lib/include/orbit.h ../../rel-plain/include/
-cp $PWD/lib/liborbit.so ../../rel-plain/lib/
+function build {
+	commit=$1
+	target=$2
+	patch=$3
 
-git checkout c5770e9c
-cmake ..
-make -j$(nproc)
-cp $PWD/../lib/include/orbit.h ../../rel-dealloc/include/
-cp $PWD/lib/liborbit.so ../../rel-dealloc/lib/
+	cd $SCRIPT_DIR/code
+	git checkout $commit
+	[ -n "$patch" ] && git apply $SCRIPT_DIR/$patch
+
+	cd build
+	cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+	make -j$(nproc)
+
+	cd $SCRIPT_DIR/code
+	# TODO: install script within cmake
+	cp lib/include/orbit.h $SCRIPT_DIR/$target/include/
+	cp build/lib/liborbit.so $SCRIPT_DIR/$target/lib/
+	git checkout -- .
+}
+
+build b5ee3a2 rel-plain
+build b5ee3a2 rel-reuse reuse.patch
+build c5770e9 rel-dealloc

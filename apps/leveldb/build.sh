@@ -9,7 +9,7 @@ git clone --recurse-submodules git@github.com:OrderLab/obiwan-leveldb.git code
 cd code
 mkdir -p build && cd build
 
-git checkout d22e723
+git checkout acf8ea1a
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$SCRIPT_DIR/rel-orbit ..
 make -j$(nproc)
 mkdir -p $SCRIPT_DIR/rel-orbit/bin

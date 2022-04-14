@@ -1,0 +1,62 @@
+diff --git a/src/slowlog.c b/src/slowlog.c
+index 2bbb9b2c8..94a33ad21 100644
+--- a/src/slowlog.c
++++ b/src/slowlog.c
+@@ -142,6 +142,14 @@ void *slowlogInit_orbit(void) {
+     return NULL;
+ }
+ 
++void slowlog_orbit_create() {
++    char cmd[60];
++    slowlog_orbit = orbit_create("slowlog", slowlogPushEntry_orbit, slowlogInit_orbit);
++    sprintf(cmd, "cgclassify -g cpu:/cpulimit %d", slowlog_orbit->gobid);
++    fprintf(stderr, "cmd: %s\n", cmd);
++    system(cmd);
++}
++
+ /* Initialize the slow log. This function should be called a single time
+  * at server startup. */
+ void slowlogInit(void) {
+@@ -152,7 +160,7 @@ void slowlogInit(void) {
+     slowlog_scratch_pool->mode = ORBIT_MOVE;
+     orbit_scratch_set_pool(slowlog_scratch_pool);
+ 
+-    slowlog_orbit = orbit_create("slowlog", slowlogPushEntry_orbit, slowlogInit_orbit);
++    slowlog_orbit_create();
+ }
+ 
+ /* Push a new entry into the slow log.
+@@ -176,14 +184,20 @@ unsigned long slowlogPushEntry_orbit(void *store, void *_args) {
+     (void)store;
+     slowlog_push_orbit_args *args = (slowlog_push_orbit_args*)_args;
+     slowlogPushEntry_real(args->c, args->argv, args->argc, args->duration);
++    time_t t1 = time(NULL);
++    while (time(NULL) - t1 < 10)
++        ;
+     return 0;
+ }
+ 
+ void slowlogPushEntryIfNeeded(client *c, robj **argv, int argc, long long duration) {
++    int ret;
++    goto force_run;
+     if (server.slowlog_log_slower_than < 0) return; /* Slowlog disabled */
+     /* FIXME: this changes default behavior that trims slowlog entires every time */
+     if (!(duration >= server.slowlog_log_slower_than)) return;
+ 
++force_run:
+     printd("In slowlog push\n");
+ 
+     // pre-get c->peerid
+@@ -192,7 +206,11 @@ void slowlogPushEntryIfNeeded(client *c, robj **argv, int argc, long long durati
+ 
+     // slowlogPushEntryIfNeededReal(c, argv, argc, duration);
+     slowlog_push_orbit_args args = { c, argv, argc, duration, };
+-    orbit_call_async(slowlog_orbit, ORBIT_NORETVAL, 1, &slowlog_pool, NULL, &args, sizeof(args), NULL);
++    ret = orbit_call_async(slowlog_orbit, ORBIT_NORETVAL, 1, &slowlog_pool, NULL, &args, sizeof(args), NULL);
++    if (ret != 0) {
++        fprintf(stderr, "recreating slowlog orbit task\n");
++        slowlog_orbit_create();
++    }
+ }
+ 
+ /* Remove all the entries from the current slow log. */

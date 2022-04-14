@@ -6,14 +6,14 @@ This root directory contains scripts both for host setup and for experiments in 
 
 ### Host requirements
 
-- Running Linux with KVM support
+- Bare-metal Linux with KVM support
   - Run `ls /dev/kvm` to see if it exists on the system or not. If it exists, KVM support should work fine.
   - Ubuntu 18.04 LTS recommended, or a system that can run `debootstrap`.
 - Root previledge
 - On x86-64 platform
 - At least 4 CPU cores
 - At least 10GB memory
-- At least 50GB disk space
+- At least 35GB disk space
 
 ### Host toolchain setup
 
@@ -61,7 +61,19 @@ You will be dropped into a guest VM's tty. The default login user is `root`, and
 
 To shutdown the VM, run `shutdown -h now` in the guest's shell.
 
-We also provide a set of shorthands for common operations such as mounting and running on the host. Run the following in your host's shell to import the shorthands. For their usage, see the [scripts/alias.sh](scripts/alias.sh) source code. You can also modify the `image_file` and `mount_dir` in the script to use absolute paths.
+We also provide a set of shorthands for common operations such as mounting and running on the host:
+
+| Shorthand | Explanation |
+| ---- | ---- |
+| `m`  | Mount disk image (does not mount if qemu is running) |
+| `um` | Unmount disk image |
+| `ch` | Chroot into mounted disk image (internally requires `sudo`) |
+| `r`  | Run the VM (fail if image is still mounted) |
+| `k`  | Force kill QEMU |
+
+For their implementation, see the [scripts/alias.sh](scripts/alias.sh) source code. You can also modify the `image_file` and `mount_dir` in the script to use absolute paths.
+
+Import the shorthands into the current shell:
 ```bash
 source scripts/alias.sh
 ```
@@ -89,9 +101,9 @@ Install the dependencies by running `./scripts/guest_toolchain.sh`.
 
 ### Environment modules
 
-Some experiments would require running different versions of applications and/or orbit userlib. For easier version management, we use [Environment Modules](http://modules.sourceforge.net) to manage versions. The Environment
+Some experiments would require running different versions of applications and/or orbit userlib. For easier version management, we use [Environment Modules](http://modules.sourceforge.net) to manage versions.
 
-Modules dependency has already been installed when running the `guest_toolchain.sh` script. Re-enter the chroot environment and try `module` command to see if it has been successfully setup. If no `module` command can be found, run the following and re-enter chroot environment again.
+The Environment Modules dependency has already been installed when running the `guest_toolchain.sh` script. Re-enter the chroot environment and try `module` command to see if it has been successfully setup. If no `module` command can be found, run the following in the guest image and re-enter chroot environment again.
 ```bash
 echo '[ -z ${MODULESHOME+x} ] && source /usr/share/modules/init/bash' >> ~/.bashrc
 ```
@@ -121,11 +133,11 @@ We provide a script to automatically download and compile all application versio
 ./apps/build_all.sh
 ```
 
-Similarly, we provide a script to automatically download and compile all the tools and workloads. Run
+Similarly, we provide a script to automatically download and compile all the tools. Run
 ```bash
-./experiments/build_all.sh
+./experiments/tools/build_all.sh
 ```
 
 ## Running the experiments
 
-Please go to [`experiments`](experiments/README.md) directory to see the list of experiments and their usages.
+Please go to [`experiments`](experiments) directory to see the list of experiments and their usages.

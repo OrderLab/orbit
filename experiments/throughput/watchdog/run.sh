@@ -3,6 +3,11 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
+repeat=1
+if [ ! -z "$1" ]; then
+	repeat=$1
+fi
+
 function ab {
     $SCRIPT_DIR/../../../apps/httpd/rel-orig/bin/ab $@
 }
@@ -27,8 +32,7 @@ function run {
 	apachectl -X -k start &
 	sleep 1
 
-	#for i in {1..5}; do
-	for i in 1; do
+	for i in `seq $repeat`; do
 		ab -c$thd -t$duration -n100000000 $url > res-${1}${thd}-${i}.out
 		sleep 5
 	done
