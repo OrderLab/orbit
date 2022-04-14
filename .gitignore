@@ -10,3 +10,6 @@ rel-*/
 *.eps
 *.png
 *.pdf
+kernel/
+qemu-image.img
+mount-point.dir/

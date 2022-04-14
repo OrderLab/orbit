@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd $__ORBIT_ROOT_DIR
+
 if [[ $1 = '-d' ]]; then
 	DBG='-s -S'  # gdb debug options (port 1234; stop cpu)
 	shift
@@ -9,12 +11,12 @@ fi
 # in gdb console, `break start_kernel`
 
 if [[ $1 = 'formysql' ]]; then
-	image=bzImage-7139b41f
+	image=kernel/bzImage-7139b41f
 elif [ -n "$1" ] && [[ $1 != 'formysql' ]]; then
 	echo Unknown kernel version "\"$1\"".
 	exit 1
 else
-	image=bzImage-ddcd247b
+	image=kernel/bzImage-ddcd247b
 fi
 
 KVM=--enable-kvm

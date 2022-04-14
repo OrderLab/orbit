@@ -2,7 +2,7 @@
 
 We provide scripts for the following list of experiments mentioned in the paper. Click on each experiment's link for its usage.
 
-## Microbenchmark
+## Microbenchmark (section 5.2)
 
 - [Orbit call (async)](micro-call)
 
@@ -26,4 +26,4 @@ Some of the case would require two or more operations running at the same time. 
 
 - [Throughput](throughput)
 - [Fork vs Vanilla vs Orbit](fork-ob-orig)
-- [Sync vs async orbit calls](async-sync)
+- [Sync vs Async orbit calls](async-sync)

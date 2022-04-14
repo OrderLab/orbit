@@ -9,11 +9,11 @@ This root directory contains scripts both for host setup and for experiments in 
 - Bare-metal Linux with KVM support
   - Run `ls /dev/kvm` to see if it exists on the system or not. If it exists, KVM support should work fine.
   - Ubuntu 18.04 LTS recommended, or a system that can run `debootstrap`.
-- Root previledge
+- Root privilege
 - On x86-64 platform
 - At least 4 CPU cores
 - At least 10GB memory
-- At least 35GB disk space
+- At least 45GB free disk space
 
 ### Host toolchain setup
 
@@ -43,40 +43,42 @@ You will see a `kernel` folder in the orbit root directory.
 
 ### Create VM image
 
-We provide a script to automatically create a image. Run in the orbit root directry:
+We provide a script to automatically create a image. Run in the orbit root directory:
 ```bash
 ./scripts/mkimg.sh
 ```
 
-You will see a `qemu-image.img` file and `mount-point.dir` directory.
+You will see a `qemu-image.img` file and a `mount-point.dir` directory in the root directory.
 
-### Boot the kernel
-
-Run
-```bash
-./scripts/run-kernel.sh
-```
-
-You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
-
-To shutdown the VM, run `shutdown -h now` in the guest's shell.
+### Import shorthands
 
 We also provide a set of shorthands for common operations such as mounting and running on the host:
 
 | Shorthand | Explanation |
 | ---- | ---- |
-| `m`  | Mount disk image (does not mount if qemu is running) |
+| `m`  | Mount disk image (does not mount if QEMU is running) |
 | `um` | Unmount disk image |
-| `ch` | Chroot into mounted disk image (internally requires `sudo`) |
+| `ch` | `chroot` into mounted disk image (internally requires `sudo`) |
 | `r`  | Run the VM (fail if image is still mounted) |
 | `k`  | Force kill QEMU |
-
-For their implementation, see the [scripts/alias.sh](scripts/alias.sh) source code. You can also modify the `image_file` and `mount_dir` in the script to use absolute paths.
 
 Import the shorthands into the current shell:
 ```bash
 source scripts/alias.sh
 ```
+
+For their implementation, see the [scripts/alias.sh](scripts/alias.sh) source code.
+
+### Booting the kernel
+
+Run the shorthand:
+```bash
+r
+```
+
+You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
+
+To shutdown the VM, run `shutdown -h now` in the guest's shell.
 
 ### Guest setup
 
@@ -97,7 +99,11 @@ git clone https://github.com/OrderLab/orbit.git
 cd orbit
 ```
 
-Install the dependencies by running `./scripts/guest_toolchain.sh`.
+Install the dependencies by running:
+```
+apt update && apt install git
+./scripts/guest_toolchain.sh
+```
 
 ### Environment modules
 
