@@ -6,7 +6,7 @@ cd $SCRIPT_DIR/../
 git clone git@github.com:OrderLab/obiwan-kernel.git kernel
 
 cd kernel
-cp $SCRIPT_DIR/scripts/orbit.config kernel/configs/
+cp $SCRIPT_DIR/orbit.config kernel/configs/
 make x86_64_defconfig
 make kvm_guest.config
 make orbit.config
