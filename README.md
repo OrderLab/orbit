@@ -177,19 +177,7 @@ You will be dropped into a guest VM's tty. The default login user is `root`, and
 
 To shutdown the VM, run `shutdown -h now` in the guest's shell.
 
-### Console Resolution
-
-By default, we run VM with the `-nographic` QEMU option, i.e., no video output, and the console output is by default 80x24. If you have GUI environment (e.g. running on a local desktop), you can comment out the `-nographic` line in `scripts/run-kernel.sh`.
-
-If using `-nographic` option, to change the VM console resolution, shutdown the VM, and run in your host terminal:
-```bash
-size=(`stty size`); echo stty rows ${size[0]} cols ${size[1]}
-```
-This will generate a command in the output looking like
-```bash
-stty rows 40 cols 120
-```
-Then run `r` again to enter the VM, and run your generated `stty` command only once after every login. This makes sure that the VM serial console's resolution matches your terminal's resolution.
+**Note**: By default, we run VM with the `-nographic` QEMU option, i.e., no video output. In this mode, the kernel outputs through emulated serial console, and serial console protocol does not support automatic geometry resizing. Therefore, every time after your terminal has been resized, make sure to run `resize` in the guest VM.
 
 ## Running the experiments
 

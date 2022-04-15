@@ -9,7 +9,7 @@ if [[ $(id -u) != 0 ]]; then
 fi
 
 apt update
-apt install -y neovim git psmisc procps tmux cmake build-essential bison \
+apt install -y xterm neovim git psmisc procps tmux cmake build-essential bison \
 	libssl-dev libncurses5-dev pkg-config python3 zlib1g-dev curl \
 	automake autotools-dev libedit-dev libjemalloc-dev libncurses-dev \
 	libpcre3-dev libtool libtool-bin python3-docutils python3-sphinx cpio \
@@ -28,3 +28,4 @@ echo "127.0.0.1 fe01 fe02 fe03" >> /etc/hosts
 
 echo '/dev/sda / ext4 errors=remount-ro,acl 0 1' > /etc/fstab
 passwd -d root
+echo 'resize > /dev/null 2>&1' >> ~/.bashrc
