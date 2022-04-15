@@ -8,6 +8,16 @@ function mount_qemu_image() {
     sudo mount -t proc none $__ORBIT_MOUNT_DIR/proc
 }
 function unmount_qemu_image() {
+    busy_process=$(sudo lsof | grep $__ORBIT_MOUNT_DIR | awk '{print($2)}')
+    if [ ! -z "$busy_process" ]; then
+      echo "Mount point $__ORBIT_MOUNT_DIR is busy."
+      echo "Used by the following PID(s):"
+      echo "$busy_process"
+      echo "To unmount it, kill these processes or exit properly"
+      echo "(e.g., 'cd' outside if you are inside the mount point)."
+      return 1
+    fi
+
     sudo umount $__ORBIT_MOUNT_DIR/dev/pts
     sudo umount $__ORBIT_MOUNT_DIR/dev
     sudo umount $__ORBIT_MOUNT_DIR/proc
