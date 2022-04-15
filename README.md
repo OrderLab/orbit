@@ -223,7 +223,9 @@ r
 
 You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
 
-To shutdown the VM, run `shutdown -h now` in the guest's shell.
+To shutdown the VM, run `shutdown -h now` in the guest's shell. Or, since we
+also added shutdown to the bash logout script when executing `guest_setup.sh`,
+you can shutdown the VM by pressing `CTRL-D` or run `logout` in the VM.
 
 **Note 1**: By default, we run VM with the `-nographic` QEMU option, i.e., no
 video output. In this mode, the kernel outputs through emulated serial console,
@@ -231,8 +233,8 @@ and serial console protocol does not support automatic geometry resizing.
 Therefore, every time after your terminal has been resized, make sure to run
 `resize` in the guest VM.
 
-**Note 2**: if you entered `exit` instead of `shutdown` in the guest VM, you 
-will be dropped back to the VM login tty. To exit this tty, press `Ctrl-A x`.
+**Note 2**: If in some cases the kernel stuck during shutdown due to orbit's
+bug in kernel code, you can press `Ctrl-A x` to force shutdown the QEMU.
 
 # Detailed Instructions
 

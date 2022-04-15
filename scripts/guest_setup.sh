@@ -29,3 +29,4 @@ echo "127.0.0.1 fe01 fe02 fe03" >> /etc/hosts
 echo '/dev/sda / ext4 errors=remount-ro,acl 0 1' > /etc/fstab
 passwd -d root
 echo 'resize > /dev/null 2>&1' >> ~/.bashrc
+echo 'if [[ $TMUX = "" ]]; then shutdown -h now; fi' > ~/.bash_logout
