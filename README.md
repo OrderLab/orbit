@@ -20,7 +20,7 @@ This root directory contains scripts both for host setup and for experiments in 
 Install host build dependencies. Suppose the system is Ubuntu.
 
 ```bash
-sudo apt-get install debootstrap libguestfs-tools qemu-system-x86 build-essentials
+sudo apt-get install debootstrap libguestfs-tools qemu-system-x86 build-essential
 ```
 
 Then clone the repository on the host.
@@ -69,18 +69,6 @@ source scripts/alias.sh
 
 For their implementation, see the [scripts/alias.sh](scripts/alias.sh) source code.
 
-### Booting the kernel
-
-Run the shorthand:
-```bash
-r
-```
-By default, we run VM with the `-nographic` QEMU option, i.e., no GUI, and the console output is by default 80x24. If you have GUI environment (e.g. running on a desktop or using X11 forward), you can comment the `-nographic` line in `scripts/run-kernel.sh`.
-
-You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
-
-To shutdown the VM, run `shutdown -h now` in the guest's shell.
-
 ### Guest setup
 
 Before running the experiments, we need to setup the guest environment and compile all the applications. This require mounting the VM image, therefore the VM needs to be in shutdown state.
@@ -95,22 +83,22 @@ You can run `exit` or press CTRL-D if you want to exit the chroot environment.
 
 Then in the chroot environment, `cd` to home directory, and clone the orbit root directory again.
 ```bash
+apt update && apt install git
 cd ~
 git clone https://github.com/OrderLab/orbit.git
 cd orbit
 ```
 
-Install the dependencies by running:
-```
-apt update && apt install git
-./scripts/guest_toolchain.sh
+Setup guest environment by running:
+```bash
+./scripts/guest_setup.sh
 ```
 
-### Environment modules
+#### Environment modules
 
 Some experiments would require running different versions of applications and/or orbit userlib. For easier version management, we use [Environment Modules](http://modules.sourceforge.net) to manage versions.
 
-The Environment Modules dependency has already been installed when running the `guest_toolchain.sh` script. Re-enter the chroot environment and try `module` command to see if it has been successfully setup. If no `module` command can be found, run the following in the guest image and re-enter chroot environment again.
+The Environment Modules dependency has already been installed when running the `guest_setup.sh` script. Re-enter the chroot environment and try `module` command to see if it has been successfully setup. If no `module` command can be found, run the following in the guest image and re-enter chroot environment again.
 ```bash
 echo '[ -z ${MODULESHOME+x} ] && source /usr/share/modules/init/bash' >> ~/.bashrc
 ```
@@ -144,6 +132,18 @@ Similarly, we provide a script to automatically download and compile all the too
 ```bash
 ./experiments/tools/build_all.sh
 ```
+
+### Booting the kernel
+
+Run the shorthand:
+```bash
+r
+```
+By default, we run VM with the `-nographic` QEMU option, i.e., no GUI, and the console output is by default 80x24. If you have GUI environment (e.g. running on a local desktop or using X11 forward), you can comment the `-nographic` line in `scripts/run-kernel.sh`.
+
+You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
+
+To shutdown the VM, run `shutdown -h now` in the guest's shell.
 
 ## Running the experiments
 
