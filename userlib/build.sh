@@ -5,7 +5,7 @@ cd $SCRIPT_DIR
 
 mkdir -p rel-{plain,dealloc,reuse}/{include,lib}
 
-git clone git@github.com:OrderLab/obiwan-userlib.git code
+git clone https://github.com/OrderLab/obiwan-userlib.git code
 cd code
 mkdir build
 
