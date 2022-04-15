@@ -33,6 +33,8 @@ Table of Contents
 - At least 4 CPU cores
 - At least 10GB memory
 - At least 45GB free disk space
+- Bash shell
+  - Enter a `bash` interactive shell before running commands in this document if you are using other shells.
 
 ### Host toolchain setup
 
@@ -170,11 +172,24 @@ Run the shorthand:
 ```bash
 r
 ```
-By default, we run VM with the `-nographic` QEMU option, i.e., no GUI, and the console output is by default 80x24. If you have GUI environment (e.g. running on a local desktop or using X11 forward), you can comment the `-nographic` line in `scripts/run-kernel.sh`.
 
 You will be dropped into a guest VM's tty. The default login user is `root`, and password is empty.
 
 To shutdown the VM, run `shutdown -h now` in the guest's shell.
+
+### Console Resolution
+
+By default, we run VM with the `-nographic` QEMU option, i.e., no video output, and the console output is by default 80x24. If you have GUI environment (e.g. running on a local desktop), you can comment out the `-nographic` line in `scripts/run-kernel.sh`.
+
+If using `-nographic` option, to change the VM console resolution, shutdown the VM, and run in your host terminal:
+```bash
+size=(`stty size`); echo stty rows ${size[0]} cols ${size[1]}
+```
+This will generate a command in the output looking like
+```bash
+stty rows 40 cols 120
+```
+Then run `r` again to enter the VM, and run your generated `stty` command only once after every login. This makes sure that the VM serial console's resolution matches your terminal's resolution.
 
 ## Running the experiments
 
