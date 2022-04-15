@@ -5,21 +5,21 @@ This root directory contains scripts both for host setup and for experiments in 
 Table of Contents
 ======
 
-- Host Setup
-  - Host requirements
-  - Host toolchain setup
-  - Build the kernel (~200MB download + ~4min)
-  - Create VM image (~100MB download + ~2min)
-  - Import shorthands
-- Guest VM Setup
-  - Guest environment setup (~450MB download + ~5min)
-  - Compile orbit userlib (~5s)
-  - Compile applications (~160MB download + ~25min)
-  - Compile test frameworks (~60MB download + ~1min)
-- Booting the kernel
-- Running the experiments
+- [Host Setup](#host-setup)
+  - [Host requirements](#host-requirements)
+  - [Host toolchain setup](#host-toolchain-setup)
+  - [Build the kernel](#build-the-kernel) (~200MB download + ~4min)
+  - [Create VM image](#create-vm-image) (~100MB download + ~2min)
+  - [Import shorthands](#import-shorthands)
+- [Guest VM Setup](#guest-vm-setup)
+  - [Guest environment setup](#guest-environment-setup) (~450MB download + ~5min)
+  - [Compile orbit userlib](#compile-orbit-userlib) (~5s)
+  - [Compile applications](#compile-applications) (~160MB download + ~25min)
+  - [Compile test frameworks](#compile-test-frameworks) (~60MB download + ~1min)
+- [Booting the kernel](#booting-the-kernel)
+- [Running the experiments](#running-the-experiments)
 
-*The estimated build time shown above is based on a 10C 20T CPU machine.*
+*The estimated build time shown in this doc is based on a 10C 20T CPU machine.*
 
 ## Host Setup
 
