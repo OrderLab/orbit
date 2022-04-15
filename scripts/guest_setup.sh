@@ -10,7 +10,7 @@ fi
 
 apt update
 apt install -y xterm neovim git psmisc procps tmux cmake build-essential bison \
-	libssl-dev libncurses5-dev pkg-config python3 zlib1g-dev curl \
+	libssl-dev libncurses5-dev pkg-config python3 zlib1g-dev curl cgroup-tools \
 	automake autotools-dev libedit-dev libjemalloc-dev libncurses-dev \
 	libpcre3-dev libtool libtool-bin python3-docutils python3-sphinx cpio \
 	llvm-6.0 llvm-6.0-dev llvm-6.0-tools llvm-6.0-runtime llvm-6.0-doc \
