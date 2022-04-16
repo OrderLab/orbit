@@ -2,3 +2,7 @@
 	path = kernel
 	url = https://github.com/OrderLab/orbit-kernel.git
 	branch = orbit
+[submodule "userlib"]
+	path = userlib
+	url = https://github.com/OrderLab/orbit-userlib.git
+	branch = orbit
