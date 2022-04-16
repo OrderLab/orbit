@@ -11,6 +11,5 @@ rel-*/
 *.png
 *.pdf
 *.swp
-kernel/
 qemu-image.img
 mount-point.dir/

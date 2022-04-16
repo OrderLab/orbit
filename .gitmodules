@@ -1,0 +1,4 @@
+[submodule "kernel"]
+	path = kernel
+	url = https://github.com/OrderLab/orbit-kernel.git
+	branch = orbit

@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR/../
 
-git clone git@github.com:OrderLab/obiwan-kernel.git kernel
+git submodule update --init --remote kernel
 
 cd kernel
 cp $SCRIPT_DIR/orbit.config kernel/configs/
