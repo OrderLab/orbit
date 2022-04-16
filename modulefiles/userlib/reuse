@@ -2,7 +2,7 @@
 
 conflict userlib
 
-set prefix /root/orbit/userlib/rel-reuse
+set prefix /root/orbit/userlib/build/rel-reuse
 
 prepend-path CPATH ${prefix}/include
 prepend-path C_INCLUDE_PATH ${prefix}/include
