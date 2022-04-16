@@ -30,3 +30,7 @@ echo '/dev/sda / ext4 errors=remount-ro,acl 0 1' > /etc/fstab
 passwd -d root
 echo 'resize > /dev/null 2>&1' >> ~/.bashrc
 echo 'if [[ $TMUX = "" ]]; then shutdown -h now; fi' > ~/.bash_logout
+
+# Varnish will set user to "nobody", and then it cannot see its header
+# installed in `/root`...  Workaround for this:
+chmod 755 /root
