@@ -17,7 +17,7 @@ Note that MySQL require a different kernel version. To run MySQL workload, shutd
 ### Repeat times
 
 By default, the `run_batch.sh` script only repeat for 1 time. To run it for
-more time (we repeated 5 for times in the paper), insert an integer argument as
+more time (we repeated for 5 times in the paper), insert an integer argument as
 the first argument:
 ```bash
 ./run_batch.sh 5 [systems...]

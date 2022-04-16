@@ -11,7 +11,7 @@ To run the experiment, run `./run.sh` in this directory.
 ### Repeat times
 
 By default, the `run.sh` script repeat for only 1 time, taking about 4 min. To
-run it for multiple times (we repeated 5 for times in the paper), run with an
+run it for multiple times (we repeated for 5 times in the paper), run with an
 argument as follows.
 ```bash
 ./run.sh 5
