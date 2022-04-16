@@ -10,9 +10,11 @@ To run the experiment, run `./run.sh` in this directory.
 
 ### Repeat times
 
-By default, the `run.sh` script repeat for only 1 time. Repeating 1 round takes about 4 min. To run it for more time (e.g. 3 times), run with argument:
+By default, the `run.sh` script repeat for only 1 time, taking about 6 min. To
+run it for multiple times (we repeated for 5 times in the paper), run with an
+argument as follows.
 ```bash
-./run.sh 3
+./run.sh 5
 ```
 
 ## Analyse results
@@ -22,5 +24,5 @@ Generate figure by running `./plot.sh`.
 The VM does not contain GUI environment, so to view the figure, it needs to be copied out first. Shutdown the VM, then on the host machine, mount and copy:
 ```bash
 m
-cp mount-point.dir/root/orbit/experiments/fork-ob-orig/figure.pdf .
+sudo cp mount-point.dir/root/orbit/experiments/fork-ob-orig/figure.pdf .
 ```
