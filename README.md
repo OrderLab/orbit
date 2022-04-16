@@ -234,7 +234,8 @@ Therefore, every time after your terminal has been resized, make sure to run
 `resize` in the guest VM.
 
 **Note 2**: If in some cases the kernel stuck during shutdown due to orbit's
-bug in kernel code, you can press `Ctrl-A x` to force shutdown the QEMU.
+bug in kernel code, you can press `Ctrl-A x` to force shutdown the QEMU, but
+this has the risk of corrupting data.
 
 # Detailed Instructions
 

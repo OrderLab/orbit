@@ -4,8 +4,16 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR
 
 repeat=1
-if [ ! -z "$1" ]; then
+re='^[0-9]+$'
+if [[ $1 =~ $re ]] ; then
 	repeat=$1
+elif [[ $1 == '-n' ]]; then
+	if [[ $2 =~ $re ]]; then
+		fileid=$2
+	else
+		echo "Invalid -n argument. Expected a number."
+		exit 1
+	fi
 fi
 
 function ab {
@@ -27,6 +35,10 @@ function run {
 	sleep 1
 
 	for i in `seq $repeat`; do
+		if [ ! -z "$fileid" ]; then
+			i=$fileid
+		fi
+
 		ab -c$thd -t$duration -n100000000 $url > res-${1}${thd}-${i}.out
 		sleep 5
 	done
