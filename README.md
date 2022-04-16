@@ -205,7 +205,7 @@ orbit.
 Run the userlib build script inside the orbit directory in the chroot environment:
 
 ```bash
-./userlib/build.sh
+./scripts/build_userlib.sh
 ```
 
 This will download userlib and compile.
