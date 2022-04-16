@@ -33,7 +33,7 @@ Table of Contents
    * [Experiment Setup](#experiment-setup)
       * [10. Build applications (~25 min)](#10-build-applications-25-min)
       * [11. Build test frameworks (~1 min)](#11-build-test-frameworks-1-min)
-   * [Run Experiments](#run-experiments)
+   * [Run Experiments](#run-experiments-4-h)
 
 *The estimated build time shown in this doc is based on a 10C 20T CPU machine.*
 
@@ -263,6 +263,6 @@ Run our script to automatically download and compile the test frameworks:
 ```
 This will download ~60MB and takes 1 min to build.
 
-## Run Experiments
+## Run Experiments (~4 h)
 
 Please go to [`experiments`](experiments) directory to see the list of experiments and their usages.
