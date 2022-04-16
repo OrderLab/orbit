@@ -14,6 +14,9 @@ elif [[ $1 == '-n' ]]; then
 		echo "Invalid -n argument. Expected a number."
 		exit 1
 	fi
+elif [ ! -z "$1" ]; then
+	echo "Unknown argument \"$1\""
+	exit 1
 fi
 
 function ycsb {
@@ -47,5 +50,5 @@ function run {
 	module unload redis
 }
 
-run orig
 run rdb
+run orig

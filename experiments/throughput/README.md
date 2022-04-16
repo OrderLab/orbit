@@ -77,8 +77,9 @@ cd rdb/  # or `cd varnish/`
 ...
 ./run.sh -n 5
 ```
-Here each line will only repeat once, and when there is buggy error behavior,
-you can restart that single round. The `-n` specifies which log file to (re)write to.
+Here each line will only repeat once (running orbit version first and then
+original version). When there is buggy error behavior, you can restart that
+single round. The `-n` specifies which log file to (re)write to.
 You will see result files naming similar to `res-orbit-2.log` when running with `-n 2`.
 
 And finally shutdown the VM and start the VM again with the kernel for MySQL
