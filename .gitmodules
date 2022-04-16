@@ -6,3 +6,7 @@
 	path = userlib
 	url = https://github.com/OrderLab/orbit-userlib.git
 	branch = orbit
+[submodule "compiler"]
+	path = compiler
+	url = https://github.com/OrderLab/orbit-compiler.git
+	branch = master

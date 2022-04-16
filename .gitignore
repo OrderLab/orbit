@@ -1,6 +1,4 @@
 build/
-code/
-compiler/
 *.log
 *.err
 *.out
