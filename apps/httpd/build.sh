@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR 
 
-git clone git@github.com:OrderLab/obiwan-httpd.git code
+git clone https://github.com/OrderLab/obiwan-httpd.git code
 cd code
 
 module load userlib/reuse

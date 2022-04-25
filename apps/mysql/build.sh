@@ -10,7 +10,7 @@ boost_dir=$SCRIPT_DIR/boost_1_59_0
 mkdir -p build
 build_dir=$SCRIPT_DIR/build
 
-git clone git@github.com:OrderLab/obiwan-mysql.git code
+git clone https://github.com/OrderLab/obiwan-mysql.git code
 srcdir=$SCRIPT_DIR/code
 
 function build {

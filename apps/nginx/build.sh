@@ -5,7 +5,7 @@ cd $SCRIPT_DIR
 
 module load userlib/reuse
 
-git clone git@github.com:OrderLab/obiwan-nginx.git code
+git clone https://github.com/OrderLab/obiwan-nginx.git code
 cd code
 
 function build {

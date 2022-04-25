@@ -5,7 +5,7 @@ cd $SCRIPT_DIR
 
 module load userlib/dealloc
 
-git clone git@github.com:OrderLab/obiwan-redis.git code
+git clone https://github.com/OrderLab/obiwan-redis.git code
 cd code
 make distclean
 

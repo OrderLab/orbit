@@ -5,7 +5,7 @@ module load userlib/dealloc
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd $SCRIPT_DIR 
 
-git clone --recurse-submodules git@github.com:OrderLab/obiwan-leveldb.git code
+git clone --recurse-submodules https://github.com/OrderLab/obiwan-leveldb.git code
 cd code
 mkdir -p build && cd build
 
