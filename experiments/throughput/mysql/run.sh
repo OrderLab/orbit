@@ -9,7 +9,7 @@ if [ ! -z "$1" ]; then
 fi
 
 # sysbench
-export PATH="$SCRIPT_DIR/../../tools/sysbench/bin/sysbench:$PATH"
+export PATH="$SCRIPT_DIR/../../tools/sysbench/bin:$PATH"
 
 function run {
 	module load mysql/$1
