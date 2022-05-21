@@ -52,8 +52,29 @@ function build {
 	git checkout -- .
 }
 
-build 0fff8c36 rel-orig
-build 011edc32 rel-orbit
-build 98308f96 rel-fork
-pkill -9 mysqld
-build 011edc32 rel-sync sync-mode.patch
+function build_orig {
+    build 0fff8c36 rel-orig
+}
+function build_orbit {
+    build 23ef2177 rel-orbit
+}
+function build_fork {
+    build 98308f96 rel-fork
+    pkill -9 mysqld
+}
+function build_sync {
+    build 011edc32 rel-sync sync-mode.patch
+}
+function build_all {
+    for t in orig orbit fork sync; do
+        build_$t
+    done
+}
+
+for t in "$@"; do
+    build_$t
+done
+
+if [[ "$@" == "" ]]; then
+    build_all
+fi
