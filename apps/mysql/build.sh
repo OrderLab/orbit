@@ -7,7 +7,6 @@ module load userlib/plain
 
 boost_dir=$SCRIPT_DIR/boost_1_59_0
 
-mkdir -p build
 build_dir=$SCRIPT_DIR/build
 
 git clone https://github.com/OrderLab/obiwan-mysql.git code
@@ -17,6 +16,9 @@ function build {
 	commit=$1
 	dest=$SCRIPT_DIR/$2
 	patch=$3
+
+	rm -rf $build_dir
+	mkdir -p $build_dir
 
 	dist=$dest/dist
 	data=$dest/data
@@ -50,6 +52,8 @@ function build {
 
 	cd $srcdir
 	git checkout -- .
+
+	rm -rf $build_dir
 }
 
 function build_orig {
